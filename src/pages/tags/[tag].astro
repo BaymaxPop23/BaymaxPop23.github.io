@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostItem from '../../components/PostItem.astro';
+import SearchModal from '../../components/SearchModal.astro';
+import TagBadge from '../../components/TagBadge.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
+  return allTags.map(tag => ({
+    params: { tag },
+    props: { tag, posts: posts.filter(p => p.data.tags.includes(tag) && !p.data.draft).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()), allTags },
+  }));
+}
+const { tag, posts, allTags } = Astro.props;
+---
+
+<BaseLayout title={`#${tag} | Sai`} description={`Posts tagged with "${tag}".`}>
+  <div class="max-w-5xl mx-auto px-6 py-16">
+    <a href="/archives" class="text-sm text-[var(--tx-3)] hover:text-[var(--accent)] transition-colors mb-6 inline-block">&larr; All posts</a>
+    <h1 class="text-3xl font-bold tracking-tight text-[var(--tx)] mb-1">#{tag}</h1>
+    <p class="text-sm text-[var(--tx-3)] mb-8">{posts.length} post{posts.length !== 1 ? 's' : ''}</p>
+
+    <div class="flex flex-wrap gap-2 mb-10">
+      {allTags.map(t => <TagBadge tag={t} href={`/tags/${t}`} active={t === tag} />)}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {posts.map(post => <PostItem title={post.data.title} description={post.data.description} date={post.data.date} tags={post.data.tags} slug={post.id} />)}
+    </div>
+  </div>
+  <SearchModal />
+</BaseLayout>

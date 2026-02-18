@@ -1,0 +1,305 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchModal from '../components/SearchModal.astro';
+
+const skills = [
+  { name: 'Application Security', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>', desc: 'Secure design reviews, threat modeling, and code reviews for web, mobile, API, and thick client apps' },
+  { name: 'Offensive Security', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg>', desc: 'Penetration testing, red team engagements, and bug bounty program leadership' },
+  { name: 'SDLC Security', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="1"/><path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0"/></svg>', desc: 'Integrating DAST, SAST, and IAST into development pipelines with a shift-left approach' },
+  { name: 'Cloud Security', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>', desc: 'AWS security automation, misconfiguration detection, and credential scanning' },
+  { name: 'Vulnerability Management', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-9"/><path d="M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z"/><path d="M14.12 3.88 16 2"/><path d="M21 21a4 4 0 0 0-3.81-4"/><path d="M21 5a4 4 0 0 1-3.55 3.97"/><path d="M22 13h-4"/><path d="M3 21a4 4 0 0 1 3.81-4"/><path d="M3 5a4 4 0 0 0 3.55 3.97"/><path d="M6 13H2"/><path d="m8 2 1.88 1.88"/><path d="M9 7.13V6a3 3 0 1 1 6 0v1.13"/></svg>', desc: '600+ vulnerabilities identified, 40+ incident response cases managed across teams' },
+  { name: 'Security Tooling', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8"/><path d="m4 17 6-6-6-6"/></svg>', desc: 'Building detection rules, automation pipelines, and custom security tools' },
+];
+
+const experience = [
+  {
+    role: 'Staff Security Engineer',
+    company: 'Interactive Brokers',
+    location: '',
+    period: 'Dec 2025 — Present',
+    highlights: [
+      'Driving SDLC security maturity by integrating SAST and DAST tooling across engineering pipelines',
+      'Building and scaling offensive security infrastructure and internal tooling for continuous assessment',
+      'Establishing automated vulnerability detection workflows to shift security left in the development process',
+      'Collaborating with engineering teams to define secure coding standards and remediation guidance',
+    ],
+  },
+  {
+    role: 'Security Engineer III (L6)',
+    team: 'Proactive Security Lead',
+    company: 'Amazon',
+    unit: 'GME Security',
+    location: 'Newark, NJ',
+    period: '2022 — 2025',
+    highlights: [
+      'Led a proactive security team specializing in offensive security, SDLC automation, and incident response',
+      'Launched Security Ambassador and Guardian programs, embedding security into engineering workflows',
+      'Designed and ran annual pentesting programs and quarterly red team engagements',
+      'Led bug bounty onboarding in collaboration with Amazon VRP',
+      'Developed the security review process for Gen AI applications',
+      'Partnered with leadership to deliver quarterly security reviews, risk assessments, and mitigation strategies',
+    ],
+  },
+  {
+    role: 'Security Engineer II',
+    company: 'Amazon',
+    location: 'Newark, NJ',
+    period: '2020 — 2022',
+    highlights: [
+      'Integrated DAST and IAST into the SDLC with QA and development teams, enabling a shift-left approach',
+      'Automated AWS misconfiguration detection and credential scanning across development pipelines',
+      'Conducted 100+ third-party security assessments, evaluating external services for risk mitigation',
+      'Mentored developers during 6-month team rotations, enhancing their expertise in application security',
+    ],
+  },
+  {
+    role: 'Security Engineer I',
+    company: 'Amazon',
+    location: 'Newark, NJ',
+    period: '2018 — 2020',
+    highlights: [
+      'Performed security assessments for web, mobile, API, and thick client applications',
+      'Conducted secure design reviews, threat modeling, and secure code reviews for product launches',
+      'Identified and triaged vulnerabilities across applications, contributing to 600+ total findings',
+      'Managed incident response cases, coordinating across engineering and legal teams for swift resolution',
+    ],
+  },
+  {
+    role: 'Security Engineer',
+    company: 'Militus Inc.',
+    location: 'Irvine, CA',
+    period: '2017 — 2018',
+    highlights: [
+      'Designed architecture for the USAM vulnerability assessment product',
+      'Developed IPS/IDS detection rules mapped to NIST 800-30 and NIST 800-53',
+      'Researched RCE, buffer overflow, and compliance-based attack vectors',
+    ],
+  },
+];
+
+const publications = [
+  {
+    title: 'One-Click Account Takeover via Deep Link Token Auto-Append',
+    url: '/blog/one-click-account-takeover-deep-link-token',
+    mediumUrl: 'https://medium.com/@BaymaxPop23/one-click-account-takeover-via-deep-link-token-auto-append-ad91993bd336',
+    date: 'Feb 2026',
+    readTime: '13 min',
+    tags: ['android', 'deep-links', 'account-takeover'],
+  },
+  {
+    title: 'Android WebView Exploitation: From Deep Link to Account Takeover',
+    url: '/blog/android-webview-exploitation-deep-link',
+    mediumUrl: 'https://medium.com/@BaymaxPop23/android-webview-exploitation-from-deep-link-to-account-takeover-62f7a3e1da15',
+    date: 'Feb 2026',
+    readTime: '6 min',
+    tags: ['android', 'webview', 'exploitation'],
+  },
+  {
+    title: 'GraphQL Introspection to Admin Takeover: Exploiting Unauthenticated APIs',
+    url: '/blog/graphql-introspection-admin-takeover',
+    mediumUrl: 'https://medium.com/@BaymaxPop23/graphql-introspection-to-admin-takeover-exploiting-unauthenticated-apis-2f4c14c3170b',
+    date: 'Feb 2026',
+    readTime: '6 min',
+    tags: ['graphql', 'api-security', 'exploitation'],
+  },
+];
+
+const certifications = [
+  'SANS SEC495 — Leveraging LLMs: Building & Securing RAG and Agentic RAG',
+  'SANS SEC565 — Red Team Operations and Adversary Emulation',
+  'Specter Ops — Adversary Tactics: Mac Tradecraft',
+  'Specter Ops — Adversary Tactics: Tradecraft Analysis',
+  'Pentester Academy — AWS Cloud Security Boot Camp',
+];
+
+const education = [
+  { degree: 'MS, Computer Science', school: 'New Jersey Institute of Technology', period: '2015 — 2016' },
+  { degree: 'BS, Computer Science', school: 'Jawaharlal Nehru Technology University', period: '2010 — 2014' },
+];
+---
+
+<BaseLayout title="About | Sai Jagadeesh" description="Sai Jagadeesh — Staff Security Engineer at Interactive Brokers. Specializing in application security, pentesting, red teaming, and SDLC security.">
+  <!-- Hero intro -->
+  <section class="hero-mesh border-b border-[var(--border)]">
+    <div class="max-w-5xl mx-auto px-6 pt-16 pb-12">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[var(--accent)] via-[var(--accent-2)] to-[var(--accent-3)] flex items-center justify-center text-xl font-bold text-[var(--bg)]">
+          S
+        </div>
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--tx)]">Sai Jagadeesh</h1>
+          <p class="text-sm text-[var(--tx-3)]">Staff Security Engineer at Interactive Brokers</p>
+        </div>
+      </div>
+
+      <div class="shimmer-line mb-8 max-w-xs"></div>
+
+      <div class="max-w-2xl space-y-4 text-[var(--tx-2)] leading-relaxed">
+        <p>
+          Experienced security engineer specializing in application security, offensive operations,
+          and baking security into the development lifecycle. Currently a Staff Security Engineer at
+          Interactive Brokers, previously leading proactive security at Amazon.
+        </p>
+        <p>
+          I've identified over 600 vulnerabilities, managed 40+ incident response cases, and launched
+          programs that bridge the gap between development and security teams. When I'm not breaking
+          things, I write about what I learn.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="max-w-5xl mx-auto px-6 py-16">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--tx-3)] mb-8">What I work on</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {skills.map((skill) => (
+        <div class="card p-5 group">
+          <div class="mb-3 text-[var(--accent)]" set:html={skill.icon} />
+          <h3 class="font-semibold text-[var(--tx)] text-sm mb-1 group-hover:text-[var(--accent)] transition-colors">
+            {skill.name}
+          </h3>
+          <p class="text-xs text-[var(--tx-3)] leading-relaxed">{skill.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Published Writing -->
+  <section class="max-w-5xl mx-auto px-6 pb-16">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--tx-3)] mb-8">Published Writing</h2>
+
+    <div class="space-y-4">
+      {publications.map((pub) => (
+        <a href={pub.url} class="block card p-5 group">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+            <div class="flex-1">
+              <h3 class="font-semibold text-[var(--tx)] text-sm mb-2 group-hover:text-[var(--accent)] transition-colors leading-snug">
+                {pub.title}
+              </h3>
+              <div class="flex flex-wrap gap-1.5">
+                {pub.tags.map((tag) => (
+                  <span class="px-2 py-0.5 text-xs font-medium rounded-md text-[var(--accent)] bg-[var(--glow)] border border-[color-mix(in_srgb,var(--accent)_20%,transparent)]">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div class="text-xs text-[var(--tx-3)] sm:text-right shrink-0">
+              <p>{pub.date}</p>
+              <p>{pub.readTime} read</p>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <p class="mt-4 text-sm text-[var(--tx-3)]">
+      More on <a href="https://medium.com/@BaymaxPop23" target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] hover:underline">Medium</a>
+    </p>
+  </section>
+
+  <!-- Experience -->
+  <section class="max-w-5xl mx-auto px-6 pb-16">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--tx-3)] mb-8">Experience</h2>
+
+    <div class="space-y-6">
+      {experience.map((job) => (
+        <div class="grad-card p-6">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-4">
+            <div>
+              <h3 class="font-semibold text-[var(--tx)] text-base">{job.role}</h3>
+              <p class="text-sm text-[var(--accent)]">
+                {job.company}{job.unit ? ` — ${job.unit}` : ''}
+                {job.team ? <span class="text-[var(--tx-3)]"> / {job.team}</span> : ''}
+              </p>
+            </div>
+            <div class="text-xs text-[var(--tx-3)] sm:text-right shrink-0">
+              <p>{job.period}</p>
+              <p>{job.location}</p>
+            </div>
+          </div>
+          {job.highlights.length > 0 && (
+            <ul class="space-y-2">
+              {job.highlights.map((h) => (
+                <li class="text-sm text-[var(--tx-2)] leading-relaxed flex gap-2">
+                  <span class="text-[var(--accent)] mt-1.5 shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+                  </span>
+                  {h}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Certifications & Education -->
+  <section class="max-w-5xl mx-auto px-6 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Certifications -->
+      <div>
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--tx-3)] mb-6">Certifications & Training</h2>
+        <div class="space-y-3">
+          {certifications.map((cert) => (
+            <div class="card p-4">
+              <p class="text-sm text-[var(--tx)] leading-relaxed">{cert}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div>
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--tx-3)] mb-6">Education</h2>
+        <div class="space-y-3">
+          {education.map((ed) => (
+            <div class="card p-4">
+              <p class="text-sm font-semibold text-[var(--tx)]">{ed.degree}</p>
+              <p class="text-xs text-[var(--tx-3)] mt-1">{ed.school} &middot; {ed.period}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--tx-3)] mt-8 mb-6">Tech Stack</h2>
+        <div class="card p-4">
+          <div class="flex flex-wrap gap-2">
+            {['Python', 'Java', 'JavaScript', 'React', 'Flask', 'Burp Suite', 'Metasploit', 'Frida', 'IDA', 'Nessus', 'Wireshark', 'AWS', 'Snort', 'Docker'].map((tech) => (
+              <span class="px-2.5 py-1 text-xs font-medium rounded-md text-[var(--accent)] bg-[var(--glow)] border border-[color-mix(in_srgb,var(--accent)_20%,transparent)]">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Connect -->
+  <section class="max-w-5xl mx-auto px-6 pb-16">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--tx-3)] mb-8">Get in touch</h2>
+
+    <div class="flex flex-wrap gap-3">
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium card text-[var(--tx-2)] hover:text-[var(--accent)]">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="https://x.com/yourusername" target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium card text-[var(--tx-2)] hover:text-[var(--accent)]">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16h-4.267z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+        Twitter
+      </a>
+      <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium card text-[var(--tx-2)] hover:text-[var(--accent)]">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </section>
+
+  <SearchModal />
+</BaseLayout>

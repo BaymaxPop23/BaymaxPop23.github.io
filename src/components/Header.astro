@@ -1,0 +1,60 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/archives', label: 'Writing' },
+  { href: '/about', label: 'About' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 bg-[var(--bg)]/80 backdrop-blur-xl border-b border-[var(--border)]">
+  <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+    <nav class="flex items-center gap-1">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class:list={[
+            'px-3 py-1.5 text-sm rounded-md transition-colors',
+            currentPath === link.href
+              ? 'text-[var(--accent)] bg-[var(--glow)]'
+              : 'text-[var(--tx-3)] hover:text-[var(--tx)]',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+
+      <div class="w-px h-4 bg-[var(--border)] mx-1"></div>
+
+      <button
+        id="search-btn"
+        class="p-2 rounded-md text-[var(--tx-3)] hover:text-[var(--tx)] hover:bg-[var(--glow)] transition-all"
+        aria-label="Search"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+      </button>
+
+      <ThemeToggle />
+    </nav>
+  </div>
+</header>
+
+<script>
+  document.getElementById('search-btn')?.addEventListener('click', () => {
+    const m = document.getElementById('search-modal');
+    if (m) { m.classList.remove('hidden'); (m.querySelector('input') as HTMLInputElement)?.focus(); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      const m = document.getElementById('search-modal');
+      if (m) { m.classList.toggle('hidden'); if (!m.classList.contains('hidden')) (m.querySelector('input') as HTMLInputElement)?.focus(); }
+    }
+  });
+</script>

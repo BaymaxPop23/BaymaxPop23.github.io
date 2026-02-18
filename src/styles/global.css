@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #050a08;
+  --color-bg-2: #0a120f;
+  --color-surface: #0d1613;
+  --color-surface-hover: #121e1a;
+  --color-accent: #34d399;
+  --color-accent-2: #2dd4bf;
+  --color-accent-3: #22d3ee;
+  --color-text: #e8eeec;
+  --color-text-2: #8fa8a0;
+  --color-text-3: #4a6960;
+  --color-border: #1a2b25;
+  --color-glow: rgba(52, 211, 153, 0.08);
+
+  --color-bg-light: #f8faf9;
+  --color-bg-2-light: #f0f4f2;
+  --color-surface-light: #ffffff;
+  --color-surface-hover-light: #f0f4f2;
+  --color-text-light: #0a1210;
+  --color-text-2-light: #4a6960;
+  --color-text-3-light: #8fa8a0;
+  --color-border-light: #d4e0dc;
+}
+
+:root {
+  color-scheme: dark;
+  --bg: var(--color-bg);
+  --bg-2: var(--color-bg-2);
+  --surface: var(--color-surface);
+  --surface-hover: var(--color-surface-hover);
+  --accent: var(--color-accent);
+  --accent-2: var(--color-accent-2);
+  --accent-3: var(--color-accent-3);
+  --tx: var(--color-text);
+  --tx-2: var(--color-text-2);
+  --tx-3: var(--color-text-3);
+  --border: var(--color-border);
+  --glow: var(--color-glow);
+}
+
+:root.light {
+  color-scheme: light;
+  --bg: var(--color-bg-light);
+  --bg-2: var(--color-bg-2-light);
+  --surface: var(--color-surface-light);
+  --surface-hover: var(--color-surface-hover-light);
+  --accent: #059669;
+  --accent-2: #0d9488;
+  --accent-3: #0891b2;
+  --tx: var(--color-text-light);
+  --tx-2: var(--color-text-2-light);
+  --tx-3: var(--color-text-3-light);
+  --border: var(--color-border-light);
+  --glow: rgba(5, 150, 105, 0.06);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--tx);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ---- Gradient text ---- */
+.grad { background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* ---- Glowing card ---- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: all 0.25s ease;
+}
+.card:hover {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  box-shadow: 0 0 30px var(--glow), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+/* ---- Gradient border card ---- */
+.grad-card {
+  position: relative;
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.grad-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.25s;
+}
+.grad-card:hover::before { opacity: 1; }
+
+/* ---- Mesh gradient hero ---- */
+.hero-mesh {
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 0%, rgba(52,211,153,0.1), transparent),
+    radial-gradient(ellipse 50% 50% at 80% 30%, rgba(45,212,191,0.07), transparent),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(34,211,238,0.05), transparent);
+}
+:root.light .hero-mesh {
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 0%, rgba(52,211,153,0.06), transparent),
+    radial-gradient(ellipse 50% 50% at 80% 30%, rgba(45,212,191,0.04), transparent),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(34,211,238,0.03), transparent);
+}
+
+/* ---- Animated gradient line ---- */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), var(--accent-3), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ---- Prose ---- */
+.prose { color: var(--tx); max-width: 68ch; line-height: 1.85; font-size: 1.0625rem; }
+.prose h1, .prose h2, .prose h3, .prose h4 { color: var(--tx); font-weight: 700; letter-spacing: -0.02em; margin-top: 2em; margin-bottom: 0.75em; }
+.prose h1 { font-size: 2rem; }
+.prose h2 { font-size: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.prose h3 { font-size: 1.25rem; }
+.prose p { margin-bottom: 1.25em; }
+.prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
+.prose a:hover { color: var(--accent-2); }
+.prose code { background: var(--bg-2); padding: 0.15em 0.4em; border-radius: 0.25rem; font-size: 0.875em; border: 1px solid var(--border); }
+.prose pre { border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; overflow-x: auto; margin: 1.5em 0; }
+.prose pre code { background: none !important; padding: 0; font-size: 0.875rem; border: none; }
+
+/* Shiki dual-theme: dark mode uses --shiki-dark variables */
+:root:not(.light) .astro-code-themes,
+:root:not(.light) .astro-code-themes span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+.prose blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; color: var(--tx-2); font-style: italic; margin: 1.5em 0; }
+.prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1.25em; }
+.prose li { margin-bottom: 0.5em; }
+.prose ul li::marker { color: var(--accent); }
+.prose img { border-radius: 0.75rem; margin: 1.5em 0; }
+.prose hr { border-color: var(--border); margin: 2em 0; }
+.prose table { width: 100%; border-collapse: collapse; margin: 1.5em 0; }
+.prose th, .prose td { border: 1px solid var(--border); padding: 0.5rem 1rem; }
+.prose th { background: var(--surface); font-weight: 600; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::selection { background: rgba(52,211,153,0.25); }
+html { scroll-behavior: smooth; }
+@view-transition { navigation: auto; }

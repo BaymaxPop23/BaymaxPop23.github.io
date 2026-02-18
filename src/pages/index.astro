@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import PostItem from '../components/PostItem.astro';
+import SearchModal from '../components/SearchModal.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const [featured, ...rest] = posts;
+---
+
+<BaseLayout title="Sai Jagadeesh | Security Engineer">
+  <Hero />
+
+  <section class="max-w-5xl mx-auto px-6 py-16">
+    <div class="flex items-baseline justify-between mb-8">
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--tx-3)]">Recent Writing</h2>
+      <a href="/archives" class="text-sm text-[var(--accent)] hover:underline transition-colors">View all &rarr;</a>
+    </div>
+
+    {posts.length > 0 ? (
+      <div class="space-y-5">
+        {featured && (
+          <PostItem title={featured.data.title} description={featured.data.description} date={featured.data.date} tags={featured.data.tags} slug={featured.id} featured={true} />
+        )}
+        {rest.length > 0 && (
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {rest.slice(0, 6).map(post => (
+              <PostItem title={post.data.title} description={post.data.description} date={post.data.date} tags={post.data.tags} slug={post.id} />
+            ))}
+          </div>
+        )}
+      </div>
+    ) : (
+      <p class="text-center py-20 text-[var(--tx-3)]">No posts yet.</p>
+    )}
+  </section>
+
+  <SearchModal />
+</BaseLayout>

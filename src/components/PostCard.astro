@@ -1,0 +1,67 @@
+---
+import TagBadge from './TagBadge.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tags: string[];
+  slug: string;
+  coverImage?: string;
+}
+
+const { title, description, date, tags, slug, coverImage } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<article class="group rounded-xl overflow-hidden transition-all duration-300 hover:translate-y-[-2px] hover:shadow-xl" style="background-color: var(--bg-card); border: 1px solid var(--border);">
+  <a href={`/blog/${slug}`} class="block">
+    <!-- Cover Image -->
+    <div class="aspect-video overflow-hidden" style="background-color: var(--bg-hover);">
+      {coverImage ? (
+        <img
+          src={coverImage}
+          alt={title}
+          class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+        />
+      ) : (
+        <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 20%, var(--bg-card)), var(--bg-card));">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent); opacity: 0.3;">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+          </svg>
+        </div>
+      )}
+    </div>
+
+    <!-- Content -->
+    <div class="p-5">
+      <!-- Tags -->
+      <div class="flex flex-wrap gap-2 mb-3">
+        {tags.slice(0, 3).map(tag => (
+          <TagBadge tag={tag} />
+        ))}
+      </div>
+
+      <!-- Title -->
+      <h3 class="text-lg font-semibold mb-2 line-clamp-2 transition-colors" style={`color: var(--text-primary);`}>
+        <span class="group-hover:text-[var(--accent)] transition-colors">{title}</span>
+      </h3>
+
+      <!-- Description -->
+      <p class="text-sm line-clamp-2 mb-3" style="color: var(--text-secondary);">
+        {description}
+      </p>
+
+      <!-- Date -->
+      <time class="text-xs font-mono" style="color: var(--text-muted);" datetime={date.toISOString()}>
+        {formattedDate}
+      </time>
+    </div>
+  </a>
+</article>

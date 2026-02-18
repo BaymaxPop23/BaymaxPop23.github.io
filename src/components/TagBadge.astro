@@ -1,0 +1,23 @@
+---
+interface Props {
+  tag: string;
+  href?: string;
+  active?: boolean;
+}
+
+const { tag, href, active = false } = Astro.props;
+const Element = href ? 'a' : 'span';
+---
+
+<Element
+  href={href}
+  class:list={[
+    'inline-block px-2.5 py-0.5 text-xs font-medium rounded-md transition-all',
+    active
+      ? 'bg-[var(--accent)] text-[var(--bg)]'
+      : 'text-[var(--accent)] bg-[var(--glow)] border border-[color-mix(in_srgb,var(--accent)_20%,transparent)]',
+    href && !active && 'hover:bg-[color-mix(in_srgb,var(--accent)_15%,transparent)]',
+  ]}
+>
+  {tag}
+</Element>

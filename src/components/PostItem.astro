@@ -1,0 +1,49 @@
+---
+import TagBadge from './TagBadge.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tags: string[];
+  slug: string;
+  featured?: boolean;
+}
+
+const { title, description, date, tags, slug, featured = false } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+{featured ? (
+  <a href={`/blog/${slug}`} class="group block grad-card">
+    <div class="p-6 sm:p-8">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-xs font-semibold uppercase tracking-wider grad">Latest</span>
+        <span class="text-xs text-[var(--tx-3)]">{formattedDate}</span>
+      </div>
+      <h3 class="text-xl sm:text-2xl font-bold text-[var(--tx)] mb-3 group-hover:text-[var(--accent)] transition-colors tracking-tight">
+        {title}
+      </h3>
+      <p class="text-[var(--tx-2)] text-sm leading-relaxed mb-5 max-w-2xl">{description}</p>
+      <div class="flex flex-wrap gap-2">
+        {tags.map(tag => <TagBadge tag={tag} />)}
+      </div>
+    </div>
+  </a>
+) : (
+  <a href={`/blog/${slug}`} class="group block card p-5 h-full flex flex-col">
+    <time datetime={date.toISOString()} class="text-xs text-[var(--tx-3)] mb-3">{formattedDate}</time>
+    <h3 class="font-semibold text-[var(--tx)] mb-2 group-hover:text-[var(--accent)] transition-colors tracking-tight leading-snug">
+      {title}
+    </h3>
+    <p class="text-sm text-[var(--tx-2)] line-clamp-2 mb-4 flex-1">{description}</p>
+    <div class="flex flex-wrap gap-1.5 mt-auto">
+      {tags.slice(0, 3).map(tag => <TagBadge tag={tag} />)}
+    </div>
+  </a>
+)}

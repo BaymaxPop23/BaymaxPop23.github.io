@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 | Sai">
+  <div class="max-w-5xl mx-auto px-6 py-32 text-center">
+    <p class="text-8xl sm:text-9xl font-bold tracking-tighter grad mb-4">404</p>
+    <p class="text-lg text-[var(--tx-2)] mb-8">This page doesn't exist.</p>
+    <div class="flex gap-3 justify-center">
+      <a href="/" class="px-4 py-2 text-sm font-medium rounded-lg bg-[var(--accent)] text-[var(--bg)] hover:opacity-90 transition-opacity">Home</a>
+      <a href="/archives" class="px-4 py-2 text-sm font-medium card text-[var(--tx-2)] hover:text-[var(--accent)]">Browse posts</a>
+    </div>
+  </div>
+</BaseLayout>

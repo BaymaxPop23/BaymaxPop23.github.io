@@ -1,0 +1,41 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TagBadge from '../components/TagBadge.astro';
+import SearchModal from '../components/SearchModal.astro';
+
+interface Props { title: string; description: string; date: Date; tags: string[]; coverImage?: string; }
+const { title, description, date, tags, coverImage } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const content = await Astro.slots.render('default');
+const readingTime = Math.max(1, Math.ceil(content.split(/\s+/).length / 200));
+---
+
+<BaseLayout title={`${title} | Sai`} description={description} ogImage={coverImage}>
+  <article class="max-w-3xl mx-auto px-6 py-16">
+    <a href="/" class="text-sm text-[var(--tx-3)] hover:text-[var(--accent)] transition-colors mb-8 inline-block">&larr; Back</a>
+
+    <header class="mb-10">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--tx)] mb-4 leading-tight">{title}</h1>
+      <div class="shimmer-line mb-6 max-w-[100px]"></div>
+      <div class="flex flex-wrap items-center gap-3 text-sm text-[var(--tx-3)] mb-4">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        <span class="text-[var(--border)]">/</span>
+        <span>{readingTime} min read</span>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        {tags.map(tag => <TagBadge tag={tag} href={`/tags/${tag}`} />)}
+      </div>
+    </header>
+
+    {coverImage && <img src={coverImage} alt={title} class="w-full rounded-xl mb-10 border border-[var(--border)]" />}
+
+    <div class="prose"><slot /></div>
+
+    <footer class="mt-16 pt-8 border-t border-[var(--border)] flex items-center justify-between">
+      <a href="/" class="text-sm text-[var(--tx-3)] hover:text-[var(--accent)] transition-colors">&larr; All posts</a>
+      <a href="#" class="text-sm text-[var(--tx-3)] hover:text-[var(--accent)] transition-colors">Top &uarr;</a>
+    </footer>
+  </article>
+  <SearchModal />
+</BaseLayout>

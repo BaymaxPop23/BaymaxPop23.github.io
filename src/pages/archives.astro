@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchModal from '../components/SearchModal.astro';
+import TagBadge from '../components/TagBadge.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
+---
+
+<BaseLayout title="Writing | Sai" description="All blog posts.">
+  <div class="max-w-5xl mx-auto px-6 py-16">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--tx)] mb-2">
+      Writing<span class="grad">.</span>
+    </h1>
+    <p class="text-sm text-[var(--tx-3)] mb-8">{posts.length} posts published</p>
+
+    <div class="shimmer-line mb-10 max-w-xs"></div>
+
+    <!-- Tags -->
+    <div class="flex flex-wrap gap-2 mb-10">
+      {allTags.map(tag => (
+        <a href={`/tags/${tag}`} class="px-3 py-1 text-xs font-medium rounded-md text-[var(--accent)] bg-[var(--glow)] border border-[color-mix(in_srgb,var(--accent)_20%,transparent)] hover:bg-[color-mix(in_srgb,var(--accent)_15%,transparent)] transition-all">
+          {tag}
+        </a>
+      ))}
+    </div>
+
+    <!-- Posts grid -->
+    {posts.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {posts.map(post => (
+          <a href={`/blog/${post.id}`} class="group block card p-5 h-full flex flex-col">
+            <time datetime={post.data.date.toISOString()} class="text-xs text-[var(--tx-3)] mb-3">
+              {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+            </time>
+            <h3 class="font-semibold text-[var(--tx)] mb-2 group-hover:text-[var(--accent)] transition-colors tracking-tight leading-snug">{post.data.title}</h3>
+            <p class="text-sm text-[var(--tx-2)] line-clamp-2 mb-4 flex-1">{post.data.description}</p>
+            <div class="flex flex-wrap gap-1.5 mt-auto">
+              {post.data.tags.map(tag => <TagBadge tag={tag} />)}
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="text-center py-20 text-[var(--tx-3)]">No posts yet.</p>
+    )}
+  </div>
+  <SearchModal />
+</BaseLayout>
