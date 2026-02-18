@@ -104,6 +104,21 @@ const publications = [
   },
 ];
 
+const tools = [
+  {
+    name: 'AttackMapper',
+    url: 'https://github.com/BaymaxPop23/attackmapper',
+    desc: 'CLI tool for red team operations that generates attack paths, maps techniques to MITRE ATT&CK, and integrates real-time threat intelligence. Produces interactive HTML reports with kill chain visualizations across AD, AWS, Azure, GCP, and network infrastructure.',
+    tags: ['Python', 'MITRE ATT&CK', 'Red Team', 'Threat Intel'],
+  },
+  {
+    name: 'EASD',
+    url: 'https://github.com/BaymaxPop23/EASD',
+    desc: 'External Attack Surface Discovery tool for red team engagements. Provide a company name or domain and EASD discovers subdomains, exposed services, cloud assets, employees, leaked credentials, and vulnerabilities using 20+ intelligence sources including Shodan, Censys, and GreyNoise.',
+    tags: ['Python', 'Recon', 'OSINT', 'Red Team'],
+  },
+];
+
 const certifications = [
   'SANS SEC495 — Leveraging LLMs: Building & Securing RAG and Agentic RAG',
   'SANS SEC565 — Red Team Operations and Adversary Emulation',
@@ -198,6 +213,29 @@ const education = [
     <p class="mt-4 text-sm text-[var(--tx-3)]">
       More on <a href="https://medium.com/@BaymaxPop23" target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] hover:underline">Medium</a>
     </p>
+  </section>
+
+  <!-- Open Source Tooling -->
+  <section class="max-w-5xl mx-auto px-6 pb-16">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--tx-3)] mb-8">Open Source Tooling</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {tools.map((tool) => (
+        <a href={tool.url} target="_blank" rel="noopener noreferrer" class="card p-6 group block">
+          <div class="flex items-center gap-3 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-[var(--accent)]"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            <h3 class="font-semibold text-[var(--tx)] group-hover:text-[var(--accent)] transition-colors">{tool.name}</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[var(--tx-3)] ml-auto opacity-0 group-hover:opacity-100 transition-opacity"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </div>
+          <p class="text-sm text-[var(--tx-2)] leading-relaxed mb-4">{tool.desc}</p>
+          <div class="flex flex-wrap gap-2">
+            {tool.tags.map((tag: string) => (
+              <span class="text-xs px-2 py-0.5 rounded-full border border-[var(--border)] text-[var(--tx-3)]">{tag}</span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
   </section>
 
   <!-- Experience -->
