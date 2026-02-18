@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://Sai-Jagadeesh.github.io',
+  site: 'https://BaymaxPop23.github.io',
   output: 'static',
   integrations: [mdx(), sitemap()],
   vite: {
