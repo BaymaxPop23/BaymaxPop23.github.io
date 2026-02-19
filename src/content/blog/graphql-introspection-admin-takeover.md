@@ -1,7 +1,7 @@
 ---
 title: "GraphQL Introspection to Admin Takeover: Exploiting Unauthenticated APIs"
 description: "How a single misconfigured endpoint exposed users and allowed the creation of administrator accounts through GraphQL introspection."
-date: 2026-02-01
+date: 2025-11-14
 tags: ["graphql", "api-security", "exploitation", "bugbounty"]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "One-Click Account Takeover via Deep Link Token Auto-Append"
 description: "When an Android app silently attaches authentication tokens to every URL opened through a deep link, a single click is all it takes."
-date: 2026-02-18
+date: 2026-01-22
 tags: ["android", "mobile-security", "deep-links", "account-takeover", "bugbounty"]
 ---
 
