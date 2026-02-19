@@ -1,4 +1,8 @@
 ---
+return Astro.redirect('/archives');
+---
+
+<!-- COMMENTED OUT: Homepage content preserved for later
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import PostItem from '../components/PostItem.astro';
@@ -10,7 +14,6 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const [featured, ...rest] = posts;
----
 
 <BaseLayout title="Sai Jagadeesh | Security Engineer">
   <Hero />
@@ -41,3 +44,4 @@ const [featured, ...rest] = posts;
 
   <SearchModal />
 </BaseLayout>
+END OF COMMENTED OUT HOMEPAGE -->
